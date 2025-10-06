@@ -4,6 +4,7 @@ const cors = require('cors');
 const port = 3000
 
 app.use(cors())
+app.use(express.json()) // for parsing application/json
 
 const recipes = [
     {
@@ -152,6 +153,22 @@ app.get('/', (req, res) => {
 app.get('/recipes', (req, res) => {
     res.json(recipes)
 })
+
+app.post('/recipes,', (req, res) => {
+    // we want to store the data from the POST to the server
+    // and currently in our server, we do not have a database
+    // instead we store the data in memory to the recipes array
+
+    // 1. question? How to store the data?
+    // 2. how do we get access to the data?
+    console.log(req.get('Content-Type'))
+    console.log(req.body);
+
+    // we store the data to in memory array recipes, IF we are sure that the data
+    // is in the correct format
+    recipes.push(req.body);
+    res.send("Yippikayjei");
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
